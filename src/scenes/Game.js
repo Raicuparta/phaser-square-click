@@ -5,7 +5,7 @@ export default class Game extends Phaser.Scene {
   level = 1
   score = 0
   // Score required to go to next level
-  nextLevelScore = 2
+  nextLevelScore = 4
   selectedCell = null
   timer = null
 
@@ -17,10 +17,10 @@ export default class Game extends Phaser.Scene {
 
   create () {
     const cellSize = 50
+    const topMargin = 0.1
 
     const columns = 5
     const rows = 8
-
     const pattern = this.generatePattern(this.level)
     const mutation = this.mutatePattern(pattern)
 
@@ -38,9 +38,9 @@ export default class Game extends Phaser.Scene {
           size: cellSize,
           pattern: isMutant ? mutation : pattern,
           onClick: this.handleCellClick,
+          x: x,
+          y: y + topMargin,
           palette,
-          x,
-          y,
           isMutant,
         })
       }
@@ -54,6 +54,7 @@ export default class Game extends Phaser.Scene {
       width: 350,
       delay: 1500,
       callback: this.handleTimeOver,
+      text: this.score.toString(10)
     })
   }
 
@@ -91,6 +92,21 @@ export default class Game extends Phaser.Scene {
 
       return row.substr(0,index) + (mutatedPixel).toString(16) + row.substr(index + 1)
     })
+
+    const mutationsPerRow = Math.floor(this.level / 2)
+    return pattern.map((row) => {
+      let mutatedRow = Array.from(row)
+      // Get all the indexes
+      const indexes = Array.from(mutatedRow.keys())
+      // Pick n of those indexes randomly
+      const randomIndexes = Utils.shuffle(indexes).slice(0, mutationsPerRow)
+      // Mutate the pixels
+      for (let i of randomIndexes) {
+        mutatedRow[i] += 8
+        mutatedRow[i] %= Object.keys(palette).length - 1
+      }
+      return mutatedRow.join('')
+    })
   }
 
   randomPixel () {
@@ -106,15 +122,9 @@ export default class Game extends Phaser.Scene {
 
 const palette = {
   0: '#ec4035',
-  1: '#ec7b2e',
-  2: '#f1a430',
-  3: '#f8cf32',
-  4: '#ea4993',
-  5: '#f7eb3a',
-  6: '#87c341',
-  7: '#55b848',
-  8: '#4cb3d5',
-  9: '#377abd',
-  a: '#31499c',
-  b: '#834c9d',
+  1: '#f1a430',
+  2: '#f7eb3a',
+  3: '#55b848',
+  4: '#377abd',
+  5: '#834c9d',
 }
