@@ -1,12 +1,12 @@
 {
-  "name": "square-click",
+  "name": "square-touch",
   "version": "1.0.0",
   "description": "",
   "author": "Ricardo Lopes <raicuparta@gmail.com>",
   "main": "index.js",
   "scripts": {
     "dev": "webpack",
-    "deploy": "webpack --config webpack.production.config.js && surge -p dist --domain https://square-click.surge.sh",
+    "deploy": "webpack --config webpack.production.config.js && surge -p dist --domain https://square-touch.surge.sh",
     "test": "eslint ./src/**/**.js"
   },
   "license": "MIT",

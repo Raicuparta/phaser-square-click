@@ -18,11 +18,11 @@ export default class Game extends Phaser.Scene {
   }
 
   create () {
-    const cellSize = 50
+    const cellSize = 58
     const topMargin = 0.1
 
     const columns = 5
-    const rows = 8
+    const rows = 7
     const pattern = this.generatePattern(this.level)
     const mutation = this.mutatePattern(pattern)
 
@@ -51,9 +51,9 @@ export default class Game extends Phaser.Scene {
     // Create timer
     this.timer = new Timer({
       scene: this,
-      x: 175,
+      x: 190,
       y: 0,
-      width: 350,
+      width: 340,
       delay: this.delay,
       callback: this.handleTimeOver,
       text: this.score.toString(10)
