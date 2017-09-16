@@ -1,4 +1,4 @@
-# Square Touch
+# [Square Touch](http://square-touch.surge.sh)
 #### Game made with [Phaser 3 Beta](https://github.com/photonstorm/phaser/tree/master/v3)
 #### Using nkholski's [Phaser 3 + ES6 + Webpack Bootstrap](https://github.com/nkholski/phaser3-es6-webpack)
 
