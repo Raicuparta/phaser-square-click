@@ -2,17 +2,22 @@ import 'phaser'
 import Boot from './scenes/Boot'
 import Game from './scenes/Game'
 
+const width = 340
+const height = 550
+const zoom = window.innerHeight / height
 
 const config = {
     type: Phaser.AUTO,
     parent: 'content',
-    width: 360,
-    height: 640,
-    backgroundColor: 0xffffff,
+    backgroundColor: 0xFFFFFF,
     scene: [
       Boot,
       Game,
     ],
+    width,
+    height,
+    zoom,
+
 }
 
 const game = new Phaser.Game(config)
