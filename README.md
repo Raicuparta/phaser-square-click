@@ -4,10 +4,10 @@
 
 # Running the game locally
 
-```git clone https://github.com/Raicuparta/square-touch```
-```cd square-touch```
-```npm install```
-```npm run dev```
+```git clone https://github.com/Raicuparta/square-touch```  
+```cd square-touch```  
+```npm install```  
+```npm run dev```  
 
 Game can now be run from localhost:3000
 
