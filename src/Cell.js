@@ -1,5 +1,9 @@
 export default class Cell extends Phaser.GameObjects.Image {
-  constructor (scene, x, y, size, pattern, palette) {
+  selected = false
+  border = null
+  onClick = null
+
+  constructor ({ scene, x, y, size, pattern, palette, onClick }) {
     const pixelSize = size / pattern.length
     const textureOptions = {
       data: pattern,
@@ -11,8 +15,39 @@ export default class Cell extends Phaser.GameObjects.Image {
 
     const margin = 15
     const sizeWithMargin = size + margin
-    super(scene, x * sizeWithMargin + margin, y * sizeWithMargin + margin, 'cell')
+    const position = {
+      x: x * sizeWithMargin + margin,
+      y: y * sizeWithMargin + margin,
+    }
+    super(scene, position.x, position.y, 'cell')
+
+    this.onClick = onClick
+
+    // Generate selection border
+    const thickness = 4
+    const boxSize = size + thickness * 2
+    this.border = scene.add.graphics()
+    this.border.fillStyle(0x000000, 1)
+    this.border.fillRect(position.x - thickness, position.y - thickness, boxSize, boxSize)
+    this.border.setVisible(false)
+
     this.setOrigin(0)
     scene.add.existing(this)
+
+    // Listen for touch events
+    scene.events.on('touchCell', this.unselect)
+    this.setInteractive()
+    this.input.onDown = this.select
+  }
+
+  select = () => {
+    this.onClick(this)
+    this.border.setVisible(true)
+    this.selected = true
+  }
+
+  unselect = () => {
+    this.selected = false
+    this.border.setVisible(false)
   }
 }

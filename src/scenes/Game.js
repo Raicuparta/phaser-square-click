@@ -1,6 +1,9 @@
 import Cell from '../Cell'
 
 export default class Game extends Phaser.Scene {
+  level = 1
+  selectedCell = null
+
   constructor () {
     super({
       key: 'Game'
@@ -13,7 +16,7 @@ export default class Game extends Phaser.Scene {
     const columns = 5
     const rows = 8
 
-    const pattern = this.generatePattern(3)
+    const pattern = this.generatePattern(this.level)
     const mutation = this.mutatePattern(pattern)
 
     const mutant = {
@@ -24,14 +27,27 @@ export default class Game extends Phaser.Scene {
     for (let x = 0; x < columns; x++) {
       for (let y = 0; y < rows; y++) {
         const isMutant = x === mutant.x && y === mutant.y
-        new Cell(this, x, y, cellSize, isMutant ? mutation : pattern, palette)
+        new Cell({
+          scene: this,
+          size: cellSize,
+          pattern: isMutant ? mutation : pattern,
+          onClick: this.handleCellClick,
+          palette,
+          x,
+          y,
+        })
       }
     }
   }
 
+  handleCellClick = (cell) => {
+    if (this.selectedCell) this.selectedCell.unselect()
+    this.selectedCell = cell
+  }
+
   // Generates array of strings (pixel rows) to be used by Phaser's generateTexture.
   // Each char in the string represents a color in the pallete
-  generatePattern(size) {
+  generatePattern (size) {
     return Array.from({length: size}, (v, i) => (
       Array.from({length: size}, (v, i) => this.randomPixel()).join('')
     ))
@@ -42,14 +58,14 @@ export default class Game extends Phaser.Scene {
     return pattern.map((row) => {
       const index = Phaser.Math.RND.integerInRange(0, row.length - 1)
       const pixel = parseInt(row[index], 16)
-      const mutatedPixel = (pixel + 8) % Object.keys(palette).length
+      const mutatedPixel = (pixel + 8) % (Object.keys(palette).length - 1)
 
       return row.substr(0,index) + (mutatedPixel).toString(16) + row.substr(index + 1)
     })
   }
 
-  randomPixel() {
-    return Phaser.Math.RND.integerInRange(0, Object.keys(palette).length).toString(16)
+  randomPixel () {
+    return Phaser.Math.RND.integerInRange(0, Object.keys(palette).length - 1).toString(16)
   }
 
   update () {
