@@ -1,8 +1,10 @@
 import Cell from '../Cell'
+import Timer from '../Timer'
 
 export default class Game extends Phaser.Scene {
   level = 1
   selectedCell = null
+  timer = null
 
   constructor () {
     super({
@@ -24,6 +26,7 @@ export default class Game extends Phaser.Scene {
       y: Math.floor(Math.random() * rows),
     }
 
+    // Create Cells
     for (let x = 0; x < columns; x++) {
       for (let y = 0; y < rows; y++) {
         const isMutant = x === mutant.x && y === mutant.y
@@ -38,6 +41,16 @@ export default class Game extends Phaser.Scene {
         })
       }
     }
+
+    // Create timer
+    this.timer = new Timer({
+      scene: this,
+      x: 175,
+      y: 0,
+      width: 350,
+      delay: 1000,
+      callback: null,
+    })
   }
 
   handleCellClick = (cell) => {
@@ -69,6 +82,7 @@ export default class Game extends Phaser.Scene {
   }
 
   update () {
+    this.timer.update()
   }
 }
 

@@ -27,8 +27,9 @@ export default class Cell extends Phaser.GameObjects.Image {
     const thickness = 4
     const boxSize = size + thickness * 2
     this.border = scene.add.graphics()
+    this.border.setPosition(position.x - thickness, position.y - thickness)
     this.border.fillStyle(0x000000, 1)
-    this.border.fillRect(position.x - thickness, position.y - thickness, boxSize, boxSize)
+    this.border.fillRect(0, 0, boxSize, boxSize)
     this.border.setVisible(false)
 
     this.setOrigin(0)
