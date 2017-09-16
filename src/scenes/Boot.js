@@ -1,10 +1,10 @@
 /* globals __DEV__ */
 
-export default class BootScene extends Phaser.Scene {
+export default class Boot extends Phaser.Scene {
   constructor () {
-    super({ key: 'BootScene' })
+    super({ key: 'Boot' })
     if (__DEV__) {
-      console.log('BootScene created!')
+      console.log('Boot created!')
     }
   }
 

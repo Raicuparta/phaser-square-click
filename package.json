@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "webpack",
-    "deploy": "webpack --config webpack.production.config.js",
+    "deploy": "webpack --config webpack.production.config.js && surge -p dist --domain https://square-click.surge.sh",
     "test": "eslint ./src/**/**.js"
   },
   "license": "MIT",

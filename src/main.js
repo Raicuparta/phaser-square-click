@@ -1,5 +1,5 @@
 import 'phaser'
-import BootScene from './scenes/Boot'
+import Boot from './scenes/Boot'
 import Game from './scenes/Game'
 
 
@@ -10,7 +10,7 @@ const config = {
     height: 640,
     backgroundColor: 0xffffff,
     scene: [
-      BootScene,
+      Boot,
       Game,
     ],
 }
