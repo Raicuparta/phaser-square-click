@@ -9,7 +9,7 @@ const zoom = window.innerHeight / height
 const config = {
     type: Phaser.AUTO,
     parent: 'content',
-    backgroundColor: 0xFFFFFF,
+    backgroundColor: 0xffffff,
     scene: [
       Boot,
       Game,

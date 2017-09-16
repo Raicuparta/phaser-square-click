@@ -88,7 +88,8 @@ export default class Game extends Phaser.Scene {
     return pattern.map((row) => {
       const index = Phaser.Math.RND.integerInRange(0, row.length - 1)
       const pixel = parseInt(row[index], 16)
-      const mutatedPixel = (pixel + 8) % (Object.keys(palette).length - 1)
+      const paletteLength = Object.keys(palette).length
+      const mutatedPixel = (pixel + 1) % paletteLength
 
       return row.substr(0,index) + (mutatedPixel).toString(16) + row.substr(index + 1)
     })
@@ -121,10 +122,6 @@ export default class Game extends Phaser.Scene {
 
 
 const palette = {
-  0: '#ec4035',
-  1: '#f1a430',
-  2: '#f7eb3a',
-  3: '#55b848',
-  4: '#377abd',
-  5: '#834c9d',
+  0: '#455a64',
+  1: '#ced7db',
 }

@@ -26,13 +26,19 @@ export default class Cell extends Phaser.GameObjects.Image {
     this.isMutant = isMutant
 
     // Generate selection border
-    const thickness = 4
+    const thickness = 2
     const boxSize = size + thickness * 2
     this.border = scene.add.graphics()
     this.border.setPosition(position.x - thickness, position.y - thickness)
     this.border.fillStyle(0x000000, 1)
     this.border.fillRect(0, 0, boxSize, boxSize)
     this.border.setVisible(false)
+
+    // Generate permanent border
+    scene.add.graphics()
+    .setPosition(position.x - thickness, position.y - thickness)
+    .fillStyle(0x000000, 0.3)
+    .fillRect(0, 0, boxSize, boxSize)
 
     this.setOrigin(0)
     scene.add.existing(this)
