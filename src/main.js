@@ -6,12 +6,13 @@ import Game from './scenes/Game'
 const config = {
     type: Phaser.AUTO,
     parent: 'content',
-    width: 800,
-    height: 600,
+    width: 360,
+    height: 640,
+    backgroundColor: 0xffffff,
     scene: [
       BootScene,
       Game,
-    ]
+    ],
 }
 
 const game = new Phaser.Game(config)
