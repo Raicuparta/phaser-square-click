@@ -3,6 +3,9 @@ import Timer from '../Timer'
 
 export default class Game extends Phaser.Scene {
   level = 1
+  score = 0
+  // Score required to go to next level
+  nextLevelScore = 2
   selectedCell = null
   timer = null
 
@@ -38,6 +41,7 @@ export default class Game extends Phaser.Scene {
           palette,
           x,
           y,
+          isMutant,
         })
       }
     }
@@ -48,14 +52,26 @@ export default class Game extends Phaser.Scene {
       x: 175,
       y: 0,
       width: 350,
-      delay: 1000,
-      callback: null,
+      delay: 1500,
+      callback: this.handleTimeOver,
     })
   }
 
   handleCellClick = (cell) => {
     if (this.selectedCell) this.selectedCell.unselect()
     this.selectedCell = cell
+  }
+
+  handleTimeOver = () => {
+    if (this.selectedCell && this.selectedCell.isMutant) this.incScore(1)
+    else this.incScore(-1)
+  }
+
+  incScore(value) {
+    if (this.score + value >= 0) this.score += value
+    this.level = Math.floor((this.score / this.nextLevelScore) + 1)
+    this.selectedCell = null
+    this.scene.start('Game')
   }
 
   // Generates array of strings (pixel rows) to be used by Phaser's generateTexture.
@@ -78,13 +94,15 @@ export default class Game extends Phaser.Scene {
   }
 
   randomPixel () {
-    return Phaser.Math.RND.integerInRange(0, Object.keys(palette).length - 1).toString(16)
+    const pixel = Phaser.Math.RND.integerInRange(0, Object.keys(palette).length - 1).toString(16)
+    return pixel
   }
 
   update () {
     this.timer.update()
   }
 }
+
 
 const palette = {
   0: '#ec4035',
@@ -97,6 +115,6 @@ const palette = {
   7: '#55b848',
   8: '#4cb3d5',
   9: '#377abd',
-  A: '#31499c',
-  B: '#834c9d',
+  a: '#31499c',
+  b: '#834c9d',
 }

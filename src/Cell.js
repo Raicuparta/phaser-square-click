@@ -2,8 +2,9 @@ export default class Cell extends Phaser.GameObjects.Image {
   selected = false
   border = null
   onClick = null
+  isMutant = false
 
-  constructor ({ scene, x, y, size, pattern, palette, onClick }) {
+  constructor ({ scene, x, y, size, pattern, palette, onClick, isMutant }) {
     const pixelSize = size / pattern.length
     const textureOptions = {
       data: pattern,
@@ -22,6 +23,7 @@ export default class Cell extends Phaser.GameObjects.Image {
     super(scene, position.x, position.y, 'cell')
 
     this.onClick = onClick
+    this.isMutant = isMutant
 
     // Generate selection border
     const thickness = 4
