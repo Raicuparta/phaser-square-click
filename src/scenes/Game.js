@@ -4,6 +4,8 @@ import Timer from '../Timer'
 export default class Game extends Phaser.Scene {
   level = 1
   score = 0
+  delay = 4000
+  delayStep = 50
   // Score required to go to next level
   nextLevelScore = 4
   selectedCell = null
@@ -52,7 +54,7 @@ export default class Game extends Phaser.Scene {
       x: 175,
       y: 0,
       width: 350,
-      delay: 1500,
+      delay: this.delay,
       callback: this.handleTimeOver,
       text: this.score.toString(10)
     })
@@ -70,6 +72,7 @@ export default class Game extends Phaser.Scene {
 
   incScore(value) {
     if (this.score + value >= 0) this.score += value
+    this.delay -= value * this.delayStep
     this.level = Math.floor((this.score / this.nextLevelScore) + 1)
     this.selectedCell = null
     this.scene.start('Game')
@@ -83,29 +86,14 @@ export default class Game extends Phaser.Scene {
     ))
   }
 
-  // Mutates 1 pixel per row
+  // Mutates some pixels per row
   mutatePattern (pattern) {
+    const mutationsPerRow = pattern[0].length
     return pattern.map((row) => {
-      const index = Phaser.Math.RND.integerInRange(0, row.length - 1)
-      const pixel = parseInt(row[index], 16)
-      const paletteLength = Object.keys(palette).length
-      const mutatedPixel = (pixel + 1) % paletteLength
+      const mutatedRow = Array.from(row).map(char => (
+        char === '0' ? '1' : '0'
+      ))
 
-      return row.substr(0,index) + (mutatedPixel).toString(16) + row.substr(index + 1)
-    })
-
-    const mutationsPerRow = Math.floor(this.level / 2)
-    return pattern.map((row) => {
-      let mutatedRow = Array.from(row)
-      // Get all the indexes
-      const indexes = Array.from(mutatedRow.keys())
-      // Pick n of those indexes randomly
-      const randomIndexes = Utils.shuffle(indexes).slice(0, mutationsPerRow)
-      // Mutate the pixels
-      for (let i of randomIndexes) {
-        mutatedRow[i] += 8
-        mutatedRow[i] %= Object.keys(palette).length - 1
-      }
       return mutatedRow.join('')
     })
   }
@@ -122,6 +110,6 @@ export default class Game extends Phaser.Scene {
 
 
 const palette = {
-  0: '#455a64',
-  1: '#ced7db',
+  0: '#88C542', // green
+  1: '#EC4A94', // #magenta
 }

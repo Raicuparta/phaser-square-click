@@ -33,13 +33,7 @@ export default class Cell extends Phaser.GameObjects.Image {
     this.border.fillStyle(0x000000, 1)
     this.border.fillRect(0, 0, boxSize, boxSize)
     this.border.setVisible(false)
-
-    // Generate permanent border
-    scene.add.graphics()
-    .setPosition(position.x - thickness, position.y - thickness)
-    .fillStyle(0x000000, 0.3)
-    .fillRect(0, 0, boxSize, boxSize)
-
+    
     this.setOrigin(0)
     scene.add.existing(this)
 
