@@ -1,7 +1,10 @@
+import Music from './Music'
+
 export default class Timer {
   callback = null
   event = null
   bar = null
+  music = null
   x = 0
   y = 0
   height = 30
@@ -11,6 +14,8 @@ export default class Timer {
     this.x = x
     this.y = y
     this.width = width
+    this.music = new Music()
+    //this.music.play()
 
     this.event = scene.time.addEvent({
       callbackScope: this,
@@ -18,6 +23,13 @@ export default class Timer {
       callback,
       delay,
     })
+
+    // scene.time.addEvent({
+    //   callbackScope: this,
+    //   loop: true,
+    //   callback: () => this.music.play(),
+    //   delay: delay / 8,
+    // })
 
     // Create bar graphics
     const graphics = scene.make.graphics()
